@@ -42,8 +42,7 @@ export default function Architecture() {
               {[
                 { n: "10", l: "Levels", d: "Developmental milestones", c: "var(--color-violet)" },
                 { n: "10", l: "Sessions / level", d: "Structured interventions", c: "var(--color-cyan)" },
-                { n: "5", l: "Games / session", d: "Specific objectives", c: "var(--color-coral)" },
-                { n: "3–5", l: "Challenges / game", d: "Skill assessment", c: "var(--color-gold)" },
+                { n: "5", l: "Games", d: "Specific objectives", c: "var(--color-coral)" },
               ].map((s, i, arr) => (
                 <div key={s.l} className="flex items-center gap-3 lg:flex-col">
                   <div
