@@ -1,0 +1,248 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN SYSTEM — "Aurora Nebula"
+   Color theory: deep indigo/midnight base (trust, depth, focus)
+   + triadic neon accents (violet, cyan, coral) for energy & play,
+   warm gold for reward/celebration. High contrast for readability.
+   ============================================================ */
+@theme {
+  --font-display: "Sora", "Space Grotesk", system-ui, sans-serif;
+  --font-heading: "Space Grotesk", "Sora", system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
+
+  --color-ink: #05050f;
+  --color-night: #0a0a1f;
+  --color-night-2: #11112b;
+  --color-surface: #16163a;
+
+  --color-violet: #a855f7;
+  --color-violet-deep: #7c3aed;
+  --color-cyan: #22d3ee;
+  --color-coral: #fb7185;
+  --color-gold: #fbbf24;
+  --color-mint: #34d399;
+
+  --color-haze: #b8b8e8;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-night);
+    color: #eef0ff;
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-violet);
+    color: white;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--color-violet), var(--color-cyan));
+    border-radius: 999px;
+  }
+}
+
+@layer components {
+  /* Glassmorphism card */
+  .glass {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.07),
+      rgba(255, 255, 255, 0.02)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .glass-strong {
+    background: linear-gradient(
+      135deg,
+      rgba(22, 22, 58, 0.85),
+      rgba(10, 10, 31, 0.7)
+    );
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    background: linear-gradient(
+      100deg,
+      #a855f7 0%,
+      #22d3ee 45%,
+      #fb7185 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(100deg, #fbbf24, #fb7185);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Primary button */
+  .btn-primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.95rem 2rem;
+    border-radius: 999px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(100deg, #7c3aed, #a855f7 40%, #22d3ee);
+    background-size: 200% 200%;
+    box-shadow: 0 10px 40px -10px rgba(168, 85, 247, 0.7);
+    transition: transform 0.25s ease, box-shadow 0.25s ease,
+      background-position 0.6s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    background-position: 100% 50%;
+    box-shadow: 0 18px 55px -12px rgba(34, 211, 238, 0.7);
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.8rem;
+    border-radius: 999px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: #eef0ff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.04);
+    transition: all 0.25s ease;
+  }
+  .btn-ghost:hover {
+    border-color: rgba(34, 211, 238, 0.6);
+    background: rgba(34, 211, 238, 0.08);
+    transform: translateY(-2px);
+  }
+
+  /* Animated gradient border ring */
+  .ring-glow {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 30px 80px -30px rgba(124, 58, 237, 0.6);
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--color-haze);
+  }
+
+  .section-pad {
+    padding-block: clamp(4rem, 9vw, 8rem);
+  }
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(0, -28px) scale(1.04); }
+}
+@keyframes float-x {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(34px, -22px); }
+}
+@keyframes drift {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  100% { transform: translate(40px, -60px) rotate(360deg); }
+}
+@keyframes aurora {
+  0%, 100% { transform: translate(-10%, -10%) rotate(0deg); }
+  50% { transform: translate(10%, 10%) rotate(180deg); }
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.5); }
+  70% { box-shadow: 0 0 0 16px rgba(34, 211, 238, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0); }
+}
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+.anim-float-slow { animation: float-slow 8s ease-in-out infinite; }
+.anim-float-x { animation: float-x 11s ease-in-out infinite; }
+.anim-drift { animation: drift 24s linear infinite; }
+.anim-aurora { animation: aurora 26s ease-in-out infinite; }
+.anim-spin-slow { animation: spin-slow 30s linear infinite; }
+.anim-pulse-ring { animation: pulse-ring 2.6s ease-out infinite; }
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 25%,
+    rgba(255, 255, 255, 0.18) 37%,
+    rgba(255, 255, 255, 0.06) 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+/* Grid backdrop */
+.bg-grid {
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-float-slow,
+  .anim-float-x,
+  .anim-drift,
+  .anim-aurora,
+  .anim-spin-slow,
+  .anim-pulse-ring,
+  .shimmer {
+    animation: none !important;
+  }
+}
