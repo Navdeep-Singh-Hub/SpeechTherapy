@@ -1,16 +1,47 @@
 import mongoose from "mongoose";
 
-export async function connectDb() {
-  const uri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/hackathon";
+let connecting = null;
 
-  // Fail fast instead of buffering queries for 10s then crashing the process.
+export async function connectDb() {
+  if (mongoose.connection.readyState === 1) return;
+
+  if (connecting) return connecting;
+
+  const uri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/hackathon";
   mongoose.set("bufferCommands", false);
 
-  await mongoose.connect(uri, {
-    serverSelectionTimeoutMS: 10000,
-  });
+  connecting = mongoose
+    .connect(uri, {
+      serverSelectionTimeoutMS: 15000,
+      socketTimeoutMS: 45000,
+    })
+    .then(() => {
+      console.log("MongoDB connected");
+    })
+    .finally(() => {
+      connecting = null;
+    });
 
-  console.log("MongoDB connected");
+  return connecting;
+}
+
+mongoose.connection.on("disconnected", () => {
+  console.warn("MongoDB disconnected — will reconnect on next request");
+});
+
+mongoose.connection.on("error", (err) => {
+  console.error("MongoDB error:", err.message);
+});
+
+export async function ensureDb() {
+  if (mongoose.connection.readyState === 1) return true;
+  try {
+    await connectDb();
+    return mongoose.connection.readyState === 1;
+  } catch (err) {
+    console.error("MongoDB reconnect failed:", err.message);
+    return false;
+  }
 }
 
 export function isDbReady() {

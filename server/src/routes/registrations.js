@@ -2,7 +2,7 @@ import { Router } from "express";
 import rateLimit from "express-rate-limit";
 import Registration from "../models/Registration.js";
 import { requireAdmin } from "../middleware/auth.js";
-import { dbUnavailable, isDbReady } from "../db.js";
+import { dbUnavailable, ensureDb } from "../db.js";
 
 const router = Router();
 
@@ -16,7 +16,7 @@ const registerLimiter = rateLimit({
 
 // --- Public: create a registration ---
 router.post("/", registerLimiter, async (req, res) => {
-  if (!isDbReady()) return dbUnavailable(res);
+  if (!(await ensureDb())) return dbUnavailable(res);
 
   try {
     const {
@@ -81,7 +81,7 @@ router.post("/", registerLimiter, async (req, res) => {
 
 // --- Public: live count for the landing page ---
 router.get("/count", async (_req, res) => {
-  if (!isDbReady()) {
+  if (!(await ensureDb())) {
     return res.json({ total: 0 });
   }
 
@@ -96,7 +96,7 @@ router.get("/count", async (_req, res) => {
 
 // --- Admin: list with search / filter / pagination ---
 router.get("/", requireAdmin, async (req, res) => {
-  if (!isDbReady()) return dbUnavailable(res);
+  if (!(await ensureDb())) return dbUnavailable(res);
 
   try {
     const { q, role, status, page = 1, limit = 25 } = req.query;
@@ -132,7 +132,7 @@ router.get("/", requireAdmin, async (req, res) => {
 
 // --- Admin: aggregate stats for the dashboard ---
 router.get("/stats", requireAdmin, async (_req, res) => {
-  if (!isDbReady()) return dbUnavailable(res);
+  if (!(await ensureDb())) return dbUnavailable(res);
 
   try {
     const [total, byRole, byStatus, byCollege, recent] = await Promise.all([
@@ -161,7 +161,7 @@ router.get("/stats", requireAdmin, async (_req, res) => {
 
 // --- Admin: update status ---
 router.patch("/:id", requireAdmin, async (req, res) => {
-  if (!isDbReady()) return dbUnavailable(res);
+  if (!(await ensureDb())) return dbUnavailable(res);
 
   try {
     const { status } = req.body || {};
@@ -184,7 +184,7 @@ router.patch("/:id", requireAdmin, async (req, res) => {
 
 // --- Admin: delete ---
 router.delete("/:id", requireAdmin, async (req, res) => {
-  if (!isDbReady()) return dbUnavailable(res);
+  if (!(await ensureDb())) return dbUnavailable(res);
 
   try {
     const deleted = await Registration.findByIdAndDelete(req.params.id);

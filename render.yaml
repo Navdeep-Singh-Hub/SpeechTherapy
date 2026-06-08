@@ -9,7 +9,7 @@ services:
       - key: NODE_VERSION
         value: "22"
       - key: CLIENT_ORIGIN
-        value: https://speech-therapy-chi.vercel.app
+        value: http://localhost:5173,https://speech-therapy-chi.vercel.app
       - key: MONGODB_URI
         sync: false
       - key: JWT_SECRET
