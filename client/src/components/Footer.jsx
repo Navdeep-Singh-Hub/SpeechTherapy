@@ -6,8 +6,8 @@ export default function Footer() {
     <footer className="relative border-t border-white/10 px-6 py-14">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-8 text-center">
         <div className="flex items-center gap-3">
-          <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-[var(--color-violet)] via-[var(--color-cyan)] to-[var(--color-coral)] text-xl">
-            🗣️
+          <span className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-[var(--color-violet)] via-[var(--color-cyan)] to-[var(--color-coral)] font-[var(--font-heading)] text-sm font-bold text-white">
+            GC
           </span>
           <div className="text-left">
             <p className="font-[var(--font-heading)] font-bold">
@@ -32,8 +32,7 @@ export default function Footer() {
         </p>
 
         <p className="text-xs text-[var(--color-haze)]/60">
-          © {new Date().getFullYear()} Global Child Online Hackathon · Built with
-          purpose 💜
+          © {new Date().getFullYear()} Global Child Online Hackathon
         </p>
       </div>
     </footer>

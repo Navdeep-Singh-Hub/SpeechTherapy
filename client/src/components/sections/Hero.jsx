@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import { api } from "../../lib/api.js";
 import { HACKATHON } from "../../lib/content.js";
 
-const floatGames = ["🔤", "🎙️", "🧠", "🤝", "🌊", "💬", "🎮", "⭐"];
-
 export default function Hero() {
   const [count, setCount] = useState(null);
 
@@ -18,22 +16,6 @@ export default function Hero() {
 
   return (
     <section className="relative flex min-h-screen items-center justify-center px-6 pt-28 pb-16">
-      {/* floating game tokens */}
-      {floatGames.map((g, i) => (
-        <span
-          key={i}
-          className="anim-float-slow pointer-events-none absolute hidden select-none text-3xl opacity-70 md:block"
-          style={{
-            left: `${8 + ((i * 12) % 84)}%`,
-            top: `${15 + ((i * 9) % 65)}%`,
-            animationDelay: `${i * -1.4}s`,
-            filter: "drop-shadow(0 6px 18px rgba(0,0,0,0.4))",
-          }}
-        >
-          {g}
-        </span>
-      ))}
-
       <div className="relative z-10 mx-auto max-w-4xl text-center">
         <motion.span
           initial={{ opacity: 0, y: -16 }}

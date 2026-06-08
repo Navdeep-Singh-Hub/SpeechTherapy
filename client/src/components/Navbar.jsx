@@ -33,8 +33,8 @@ export default function Navbar() {
         }`}
       >
         <Link to="/" className="flex items-center gap-2.5">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-[var(--color-violet)] via-[var(--color-cyan)] to-[var(--color-coral)] text-lg shadow-lg">
-            🗣️
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-[var(--color-violet)] via-[var(--color-cyan)] to-[var(--color-coral)] font-[var(--font-heading)] text-xs font-bold tracking-tight text-white shadow-lg">
+            GC
           </span>
           <span className="font-[var(--font-heading)] text-sm font-bold leading-tight">
             GLOBAL CHILD

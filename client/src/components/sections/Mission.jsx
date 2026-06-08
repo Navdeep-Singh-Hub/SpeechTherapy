@@ -67,7 +67,6 @@ export default function Mission() {
 
         <Reveal delay={0.1}>
           <div className="ring-glow relative mt-8 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[var(--color-violet-deep)]/30 via-transparent to-[var(--color-cyan)]/20 p-8 text-center sm:p-12">
-            <div className="anim-spin-slow absolute -right-20 -top-20 h-56 w-56 rounded-full border border-dashed border-white/10" />
             <p className="relative font-[var(--font-display)] text-xl font-semibold leading-snug sm:text-2xl">
               We believe{" "}
               <span className="text-gradient">artificial intelligence</span> can
