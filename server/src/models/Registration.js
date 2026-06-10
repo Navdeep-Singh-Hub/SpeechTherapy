@@ -36,6 +36,7 @@ const RegistrationSchema = new mongoose.Schema(
       default: "Other",
     },
     skills: { type: [String], default: [] },
+    preferableStack: { type: [String], default: [] },
     teamName: { type: String, trim: true, maxlength: 120 },
     portfolio: { type: String, trim: true, maxlength: 300 },
     motivation: { type: String, trim: true, maxlength: 1200 },

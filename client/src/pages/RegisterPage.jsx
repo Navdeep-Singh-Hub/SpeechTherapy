@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedBackground from "../components/AnimatedBackground.jsx";
-import { Input, Select, Textarea } from "../components/Field.jsx";
+import { Input, Select, Textarea, StackPicker } from "../components/Field.jsx";
 import { api } from "../lib/api.js";
-import { roleOptions, yearOptions } from "../lib/content.js";
+import { roleOptions, yearOptions, stackOptions } from "../lib/content.js";
 
 const initial = {
   fullName: "",
@@ -16,6 +16,7 @@ const initial = {
   year: "1st",
   role: "Software Developer",
   skills: "",
+  preferableStack: [],
   teamName: "",
   portfolio: "",
   motivation: "",
@@ -36,6 +37,10 @@ export default function RegisterPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (form.preferableStack.length === 0) {
+      setStatus({ state: "error", msg: "Please select at least one preferable stack." });
+      return;
+    }
     setStatus({ state: "loading", msg: "" });
     try {
       await api.registerVolunteer(form);
@@ -205,6 +210,16 @@ export default function RegisterPage() {
                     value={form.role}
                     onChange={update("role")}
                     options={roleOptions}
+                  />
+
+                  <StackPicker
+                    label="Preferable stack"
+                    required
+                    options={stackOptions}
+                    value={form.preferableStack}
+                    onChange={(preferableStack) =>
+                      setForm((f) => ({ ...f, preferableStack }))
+                    }
                   />
 
                   <Input

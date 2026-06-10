@@ -188,3 +188,26 @@ export const roleOptions = [
 ];
 
 export const yearOptions = ["1st", "2nd", "3rd", "4th", "5th", "Postgrad", "Other"];
+
+/** Official app stack shown on the home page */
+export const projectStack = [
+  { name: "Expo", desc: "Cross-platform mobile framework" },
+  { name: "React Native", desc: "Native mobile UI" },
+  { name: "Express.js", desc: "REST API & backend routes" },
+  { name: "Node.js", desc: "JavaScript runtime" },
+  { name: "MongoDB", desc: "Document database & Atlas" },
+];
+
+/** Options volunteers can select during registration */
+export const stackOptions = [
+  "Expo / React Native",
+  "Express.js",
+  "Node.js",
+  "MongoDB",
+  "React (Web)",
+  "AI / ML",
+  "UI/UX Design",
+  "Game Development",
+  "Speech Therapy Domain",
+  "Other",
+];

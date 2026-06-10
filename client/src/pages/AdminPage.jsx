@@ -210,6 +210,7 @@ function Dashboard({ token, onLogout }) {
       "year",
       "role",
       "skills",
+      "preferableStack",
       "teamName",
       "status",
       "createdAt",
@@ -292,7 +293,7 @@ function Dashboard({ token, onLogout }) {
 
       {/* Role distribution + top colleges */}
       {stats && (
-        <div className="mb-6 grid gap-4 lg:grid-cols-2">
+        <div className="mb-6 grid gap-4 lg:grid-cols-3">
           <div className="glass rounded-2xl p-5">
             <p className="mb-3 font-[var(--font-heading)] font-semibold">
               By role
@@ -332,6 +333,26 @@ function Dashboard({ token, onLogout }) {
                   >
                     {c._id || "Unknown"}{" "}
                     <strong className="text-[var(--color-cyan)]">{c.count}</strong>
+                  </span>
+                ))
+              ) : (
+                <p className="text-sm text-[var(--color-haze)]">No data yet.</p>
+              )}
+            </div>
+          </div>
+          <div className="glass rounded-2xl p-5">
+            <p className="mb-3 font-[var(--font-heading)] font-semibold">
+              Preferable stack
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {stats.byStack?.length ? (
+                stats.byStack.map((s) => (
+                  <span
+                    key={s._id || "none"}
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs"
+                  >
+                    {s._id || "Unknown"}{" "}
+                    <strong className="text-[var(--color-violet)]">{s.count}</strong>
                   </span>
                 ))
               ) : (
@@ -401,6 +422,7 @@ function Dashboard({ token, onLogout }) {
                 <th className="px-4 py-3.5 font-semibold">Volunteer</th>
                 <th className="px-4 py-3.5 font-semibold">College</th>
                 <th className="px-4 py-3.5 font-semibold">Role</th>
+                <th className="px-4 py-3.5 font-semibold">Stack</th>
                 <th className="px-4 py-3.5 font-semibold">Status</th>
                 <th className="px-4 py-3.5 font-semibold">Joined</th>
                 <th className="px-4 py-3.5 font-semibold"></th>
@@ -410,7 +432,7 @@ function Dashboard({ token, onLogout }) {
               {loading ? (
                 [...Array(5)].map((_, i) => (
                   <tr key={i} className="border-b border-white/5">
-                    <td className="px-4 py-4" colSpan={6}>
+                    <td className="px-4 py-4" colSpan={7}>
                       <div className="shimmer h-5 w-full rounded" />
                     </td>
                   </tr>
@@ -435,6 +457,22 @@ function Dashboard({ token, onLogout }) {
                     </td>
                     <td className="px-4 py-3.5 text-[var(--color-haze)]">
                       {r.role}
+                    </td>
+                    <td className="px-4 py-3.5">
+                      <div className="flex max-w-[180px] flex-wrap gap-1">
+                        {(r.preferableStack || []).length ? (
+                          r.preferableStack.map((s) => (
+                            <span
+                              key={s}
+                              className="rounded-md border border-white/10 bg-white/5 px-1.5 py-0.5 text-[0.65rem] text-[var(--color-haze)]"
+                            >
+                              {s}
+                            </span>
+                          ))
+                        ) : (
+                          <span className="text-xs text-[var(--color-haze)]">—</span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-3.5">
                       <select
@@ -474,7 +512,7 @@ function Dashboard({ token, onLogout }) {
               ) : (
                 <tr>
                   <td
-                    colSpan={6}
+                    colSpan={7}
                     className="px-4 py-16 text-center text-[var(--color-haze)]"
                   >
                     No volunteers match your filters yet.

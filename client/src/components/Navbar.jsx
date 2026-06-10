@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const links = [
+  { href: "#stack", label: "Stack" },
   { href: "#mission", label: "Mission" },
   { href: "#architecture", label: "Platform" },
   { href: "#domains", label: "Therapy" },

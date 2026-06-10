@@ -29,6 +29,7 @@ router.post("/", registerLimiter, async (req, res) => {
       year,
       role,
       skills,
+      preferableStack,
       teamName,
       portfolio,
       motivation,
@@ -46,6 +47,12 @@ router.post("/", registerLimiter, async (req, res) => {
       ? skills.split(",").map((s) => s.trim()).filter(Boolean)
       : [];
 
+    const normalizedStack = Array.isArray(preferableStack)
+      ? preferableStack
+      : typeof preferableStack === "string"
+      ? preferableStack.split(",").map((s) => s.trim()).filter(Boolean)
+      : [];
+
     const registration = await Registration.create({
       fullName,
       email,
@@ -56,6 +63,7 @@ router.post("/", registerLimiter, async (req, res) => {
       year,
       role,
       skills: normalizedSkills,
+      preferableStack: normalizedStack,
       teamName,
       portfolio,
       motivation,
@@ -135,7 +143,7 @@ router.get("/stats", requireAdmin, async (_req, res) => {
   if (!(await ensureDb())) return dbUnavailable(res);
 
   try {
-    const [total, byRole, byStatus, byCollege, recent] = await Promise.all([
+    const [total, byRole, byStatus, byCollege, byStack, recent] = await Promise.all([
       Registration.countDocuments(),
       Registration.aggregate([
         { $group: { _id: "$role", count: { $sum: 1 } } },
@@ -149,10 +157,16 @@ router.get("/stats", requireAdmin, async (_req, res) => {
         { $sort: { count: -1 } },
         { $limit: 8 },
       ]),
+      Registration.aggregate([
+        { $unwind: "$preferableStack" },
+        { $group: { _id: "$preferableStack", count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 10 },
+      ]),
       Registration.find().sort({ createdAt: -1 }).limit(5),
     ]);
 
-    res.json({ total, byRole, byStatus, byCollege, recent });
+    res.json({ total, byRole, byStatus, byCollege, byStack, recent });
   } catch (err) {
     console.error("Stats error:", err.message);
     dbUnavailable(res);
